@@ -1,4 +1,4 @@
-package br.com.agrobot;
+package com.agrobot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
@@ -66,4 +66,5 @@ public class AgroBotSimulador {
             Thread.sleep(5000);
         }
     }
+
 }
