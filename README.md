@@ -34,7 +34,6 @@ Este projeto foi migrado de Python para Java visando **robustez** e **performanc
 /workspaces/AgroBotJava └── AgroBot-Java/ ├── pom.xml └── src/main/java/com/agrobot/ ├── AgroBotServer.java      // API - O cérebro do sistema └── AgroBotSimulador.java   // IoT - Gerador de dados
 
 
-
 ---
 
 ## 🛠️ Como Executar (Guia Passo a Passo)
@@ -50,17 +49,27 @@ mvn clean compile
 Aguarde a mensagem: BUILD SUCCESS.
 
 
+```
+
+Terminal 1 - Servidor (API)
+cd /workspaces/AgroBotJava/AgroBot-Java
+mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
+
+```
 cd /workspaces/AgroBotJava/AgroBot-Java
 mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
 
 👀 Aguarde: Javalin has started ...
+```
 
-
+Terminal 2 - Sensores (Simulador
+```
 cd /workspaces/AgroBotJava/AgroBot-Java
 mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotSimulador"
+```
 
+🎉 Pronto
 
-🎉 Pronto!
 - Terminal 2: 📡 Sensor enviando: Soja (35°C)...
 - Terminal 1: Dados recebidos
 - Telegram: Alerta enviado se temperatura for crítica
