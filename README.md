@@ -1,122 +1,87 @@
-🌱 AgroBot Java - Monitoramento IoT Inteligente
+🌱 AgroBot Java – Monitoramento IoT Inteligente
 
-Status: ✅ Concluído | Versão: 2.0 (Migration Python -> Java)
+Status: ✔️ Concluído
+Versão: 2.0 (Migração Python ➝ Java)
 
 📖 Sobre o Projeto
 
-O AgroBot é um sistema de monitoramento agrícola que simula sensores IoT em plantações. Ele coleta dados de temperatura e umidade em tempo real e utiliza uma API em Java para analisar riscos (Geada ou Estresse Térmico).
+O AgroBot é um sistema de monitoramento agrícola que simula sensores IoT para plantações.
+Ele coleta dados de temperatura e umidade, envia para uma API em Java, e realiza a análise de risco em tempo real:
 
-Se uma condição crítica for detectada, o sistema envia alertas imediatos via Telegram para o agrônomo e aciona sistemas automáticos (Irrigação ou Aquecedores).
+❄️ Geada Detected
+
+🔥 Estresse Térmico
+
+Quando uma condição crítica é encontrada, o sistema:
+
+Envia alertas imediatos via Telegram 📲
+
+Aciona sistemas automáticos como Irrigação 💧 ou Aquecedores 🔥
 
 🚀 Por que Java (Javalin)?
 
-Este projeto foi migrado de Python para Java visando robustez e performance em ambientes corporativos. Abaixo, as escolhas técnicas detalhadas:
+O projeto foi migrado de Python para Java visando robustez, performace, e compatibilidade corporativa.
+Aqui estão as escolhas técnicas principais:
 
-Característica
-
-Escolha Técnica
-
-Justificativa
-
-Framework
-
-
-
-Extremamente leve (inicia em < 1s) e consome pouca RAM, ideal para rodar em PCs acadêmicos ou servidores limitados.
-
-Compatibilidade
-
-
-
-Configuramos para rodar no Java 11 (LTS), garantindo execução em laboratórios com máquinas mais antigas sem erros de versão.
-
-Build
-
-
-
-Gerenciamento padronizado de dependências e compilação, facilitando a execução via terminal.
-
+Característica	Escolha Técnica	Justificativa
+Framework	Javalin	Extremamente leve, inicia em < 1s e consome pouca RAM. Ideal para máquinas acadêmicas e servidores enxutos.
+Compatibilidade	Java 11 (LTS)	Funciona em laboratórios com máquinas mais antigas, sem erros de versão.
+Build	Maven	Padroniza dependências, compilação e execução via linha de comando.
 📂 Estrutura do Projeto
-
-A organização dos arquivos segue o padrão Maven:
-
 /workspaces/AgroBotJava
-└── AgroBot-Java/                <-- PASTA PRINCIPAL DO PROJETO
-    ├── pom.xml                  <-- Configurações e Dependências
+└── AgroBot-Java/                 <-- Pasta Principal
+    ├── pom.xml                   <-- Dependências e Configurações
     └── src/main/java/com/agrobot/
-        ├── AgroBotServer.java    <-- (API) O Cérebro do sistema
-        └── AgroBotSimulador.java <-- (IoT) O Gerador de dados
+        ├── AgroBotServer.java     <-- API (cérebro do sistema)
+        └── AgroBotSimulador.java  <-- Simulador IoT (gerador de dados)
 
+🛠️ Como Executar
 
-🛠️ Como Executar (Guia Passo a Passo)
+Importante: No Codespaces, Java + Maven já estão prontos para uso.
 
-Como estamos usando o GitHub Codespaces, o ambiente já possui Java e Maven. Siga a ordem exata abaixo:
-
-1️⃣ Passo Inicial: Compilação
-
-Abra o terminal. Precisamos entrar na pasta do projeto e compilar o código.
-
-# Entra na pasta correta (IMPORTANTE!)
+1️⃣ Compilação Inicial
 cd AgroBot-Java
-
-# Baixa as bibliotecas e compila
 mvn clean compile
 
 
-Aguarde aparecer a mensagem "BUILD SUCCESS".
+✔️ Aguarde aparecer BUILD SUCCESS.
 
-2️⃣ Terminal 1: Ligar o Servidor (API)
-
-Este terminal ficará travado rodando o servidor. Não o feche!
-
-# Certifique-se de estar na pasta AgroBot-Java
+2️⃣ Terminal 1 – Iniciar o Servidor (API)
 cd /workspaces/AgroBotJava/AgroBot-Java
-
-# Comando para rodar o servidor
 mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
 
 
-👀 Sucesso: Aguarde aparecer: Javalin has started ...
+Você deverá ver:
+Javalin has started ...
 
-3️⃣ Terminal 2: Ligar os Sensores (Simulador)
+3️⃣ Terminal 2 – Iniciar o Simulador (Sensores)
 
-Abra um Novo Terminal (clique no + ou divida a tela).
+Abra outro terminal e execute:
 
-# Entra na pasta correta novamente
 cd /workspaces/AgroBotJava/AgroBot-Java
-
-# Comando para rodar o simulador
 mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotSimulador"
 
 
-🎉 Pronto!
-
-No Terminal 2, você verá: 📡 Sensor enviando: Soja (35°C)...
-
-No Terminal 1, você verá os dados chegando.
-
-No Telegram, o alerta chegará se a temperatura for crítica!
+📡 Sensor enviando dados...
+💬 Alertas vão aparecer no Telegram em caso de risco!
 
 ⚠️ Solução de Problemas Comuns
+1. "Goal requires a project to execute..."
 
-1. Erro: "Goal requires a project to execute..."
+Causa: comando mvn executado fora da pasta do projeto.
+Solução:
 
-Causa: Você tentou rodar o comando mvn fora da pasta AgroBot-Java.
+cd AgroBot-Java
 
-Solução: Digite cd AgroBot-Java e tente de novo.
+2. "Address already in use"
 
-2. Erro: "Address already in use"
+Causa: servidor rodando em dois terminais.
+Solução: finalize os terminais ou reinicie o Codespaces.
 
-Causa: Você tentou abrir o servidor duas vezes ou o terminal antigo ainda está rodando.
+3. "invalid target release: 17"
 
-Solução: Feche os terminais (no ícone de lixeira) e comece do zero.
+Causa: máquina com Java antigo.
+Solução: Ajuste no pom.xml:
 
-3. Erro: "invalid target release: 17"
-
-Causa: O PC tem Java antigo.
-
-Solução: No pom.xml, mude a versão de <maven.compiler.source>17 para 11 ou 1.8.
-
-👨‍💻 Autor
-
-Desenvolvido para demonstração de arquitetura IoT com Java.
+<maven.compiler.source>11</maven.compiler.source>
+<maven.compiler.target>11</maven.compiler.target>
