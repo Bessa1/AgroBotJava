@@ -1,4 +1,4 @@
-package br.com.agrobot;
+package com.agrobot;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -117,4 +117,5 @@ public class AgroBotServer {
         public double temp;
         public double umidade;
     }
+
 }
