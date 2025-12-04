@@ -65,7 +65,7 @@ mvn clean compile
 mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
 ```
 
-3️⃣ Terminal 2: Ligar os Sensores (Simulador)
+### 3️⃣ Terminal 2: Ligar os Sensores (Simulador)
 ```
 cd AgroBot-Java
 mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotSimulador"
