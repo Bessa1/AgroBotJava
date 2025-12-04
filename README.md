@@ -45,3 +45,28 @@ AgroBot-Java/
                 └── agrobot/
                     ├── AgroBotServer.java    # 🧠 API: Recebe dados e decide (Alertas)
                     └── AgroBotSimulador.java # 📡 IoT: Gera dados fake e envia via HTTP
+```
+
+## 🛠️ Como Executar (Passo a Passo)
+```
+
+Para o sistema funcionar, é necessário rodar dois processos em terminais separados: o **Servidor** (que recebe os dados) e o **Simulador** (que gera os dados).
+
+```
+### 1️⃣ Compilação (Obrigatório na primeira vez)
+Abra o terminal na pasta raiz do projeto e compile o código para baixar as dependências do Maven:
+
+```bash
+cd AgroBot-Java
+mvn clean compile
+```
+### 2️⃣ Terminal 1: Ligar o Servidor (API)
+```
+mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
+```
+
+3️⃣ Terminal 2: Ligar os Sensores (Simulador)
+```
+cd AgroBot-Java
+mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotSimulador"
+```
