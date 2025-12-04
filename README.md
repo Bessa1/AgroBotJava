@@ -1,76 +1,47 @@
 # 🌱 AgroBot Java - Monitoramento IoT Inteligente
 
-**Status:** ✅ Concluído  
-**Versão:** 2.0 *(Migração Python → Java)*
-
----
+> **Status:** ✅ Concluído | **Versão:** 2.0 *(Migração Python → Java)*
 
 ## 📖 Sobre o Projeto
 
-O **AgroBot** é um sistema de monitoramento agrícola que simula sensores IoT em plantações. Ele coleta dados de **temperatura** e **umidade** em tempo real e utiliza uma API em Java para analisar riscos como **Geada** ou **Estresse Térmico**.
+O **AgroBot** é um sistema de monitoramento agrícola que simula sensores IoT em plantações. O sistema coleta dados de **temperatura** e **umidade** em tempo real e utiliza uma API desenvolvida em **Java (Javalin)** para analisar riscos para culturas sensíveis (como Soja e Café).
 
-Se uma condição crítica for detectada, o sistema:
-
-- Envia alertas imediatos via **Telegram** 📩  
-- Aciona sistemas automáticos de **Irrigação 💧** ou **Aquecimento 🔥**
+Se uma condição crítica for detectada (como Geada ou Estresse Térmico), o sistema atua imediatamente:
+1.  Envia alertas instantâneos via **Telegram** 📩 para o agrônomo.
+2.  Simula o acionamento de sistemas de **Irrigação 💧** ou **Aquecimento 🔥**.
 
 ---
 
-## 🚀 Por que Java (Javalin)?
+## 🚀 Tecnologias e Decisões Técnicas
 
-Este projeto foi migrado de Python para Java visando **robustez** e **performance** em ambientes corporativos.
+Este projeto marca a migração do backend de Python para Java, visando maior robustez e tipagem estática.
 
-### 🧠 Escolhas Técnicas
+* ![Java](https://img.shields.io/badge/Java-11%2B-ED8B00?style=flat&logo=openjdk&logoColor=white) **Core:** Linguagem utilizada para garantir performance e estabilidade.
+* ![Javalin](https://img.shields.io/badge/Javalin-Lightweight-ff0055) **Framework Web:** Escolhido por ser extremamente leve (inicia em milissegundos), ideal para microsserviços e IoT.
+* ![Maven](https://img.shields.io/badge/Maven-Build-C71A36?style=flat&logo=apachemaven&logoColor=white) **Gerenciador:** Automação de compilação e dependências.
+* ![Unirest](https://img.shields.io/badge/Unirest-Http_Client-blue) **Cliente HTTP:** Para comunicação simplificada com a API do Telegram.
 
-| Característica     | Escolha Técnica | Justificativa                                                                 |
-|--------------------|------------------|-------------------------------------------------------------------------------|
-| Framework          | Javalin          | Extremamente leve (inicia em < 1s), ideal para PCs acadêmicos ou servidores  |
-| Compatibilidade    | Java 11 (LTS)    | Garante execução em máquinas antigas sem erros de versão                     |
-| Build              | Maven            | Gerenciamento padronizado de dependências e compilação                       |
+### 🧠 Por que essa Stack?
+
+| Característica | Escolha Técnica | Justificativa |
+| :--- | :--- | :--- |
+| **Framework** | **Javalin** | Diferente do Spring Boot, o Javalin é minimalista. Ideal para rodar em hardware modesto (sensores/gateways) sem "peso" desnecessário. |
+| **Compatibilidade** | **Java 11 (LTS)** | Garante execução em diversos ambientes legados e modernos sem erros de versão. |
+| **Build** | **Maven** | Padronização do projeto, facilitando que qualquer desenvolvedor baixe e rode (`mvn clean install`). |
 
 ---
 
 ## 📂 Estrutura do Projeto
-/workspaces/AgroBotJava └── AgroBot-Java/ ├── pom.xml └── src/main/java/com/agrobot/ ├── AgroBotServer.java      // API - O cérebro do sistema └── AgroBotSimulador.java   // IoT - Gerador de dados
 
+A organização segue o padrão Maven, separando claramente o "Cérebro" (Servidor) dos "Sensores" (Simulador).
 
----
-
-## 🛠️ Como Executar (Guia Passo a Passo)
-
-> Requisitos: Ambiente GitHub Codespaces com Java e Maven já instalado.
-
-### 1️⃣ Compilação
-
-```bash
-cd AgroBot-Java
-mvn clean compile
-
-Aguarde a mensagem: BUILD SUCCESS.
-
-
-```
-
-Terminal 1 - Servidor (API)
-cd /workspaces/AgroBotJava/AgroBot-Java
-mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
-
-```
-cd /workspaces/AgroBotJava/AgroBot-Java
-mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotServer"
-
-👀 Aguarde: Javalin has started ...
-```
-
-Terminal 2 - Sensores (Simulador
-```
-cd /workspaces/AgroBotJava/AgroBot-Java
-mvn exec:java -Dexec.mainClass="com.agrobot.AgroBotSimulador"
-```
-
-🎉 Pronto
-
-- Terminal 2: 📡 Sensor enviando: Soja (35°C)...
-- Terminal 1: Dados recebidos
-- Telegram: Alerta enviado se temperatura for crítica
-
+```text
+AgroBot-Java/
+├── pom.xml                     # Arquivo de dependências do Maven
+└── src/
+    └── main/
+        └── java/
+            └── com/
+                └── agrobot/
+                    ├── AgroBotServer.java    # 🧠 API: Recebe dados e decide (Alertas)
+                    └── AgroBotSimulador.java # 📡 IoT: Gera dados fake e envia via HTTP
